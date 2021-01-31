@@ -1,0 +1,22 @@
+{% extends 'Helper/base.html' %}
+
+{% block title %} {{title}} {% endblock %}
+
+{% block content %}
+    {% if not publicated_today %}
+    <div style="text-align: center;">
+        <h1>Добавить дневной отчёт</h1>
+        <form method="post">
+            {% csrf_token %}
+            {{ form.review }}<br>
+            {{ date }}<br>
+            <button type="submit" class="btn btn-success" style="margin-top: 5px; margin-bottom: 5px;">Добавить</button>
+        </form>
+    </div>
+    {% endif %}
+
+    {% for day in diary %}
+        <b>{{ day.pub_date }}</b>
+        <p style="text-align: justify"> {{ day.review }} </p>
+    {% endfor %}
+{% endblock %}
