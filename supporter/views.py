@@ -1,5 +1,5 @@
 import datetime
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from .models import DailyReview
 from .forms import DailyReviewForm
@@ -40,6 +40,9 @@ def diary(request):
 
     if request.method == 'POST':
         review_info = request.POST
-        print(review_info)
+        daily_review = DailyReview(review=review_info['review'],
+                                   pub_date=date)
+        daily_review.save()
+        return redirect('diary')
 
     return render(request, 'Helper/diary.html', context)
