@@ -4,13 +4,28 @@
 
 {% block content %}
     {% if not publicated_today %}
-    	<div style="text-align: center; margin-top: 15px; margin-bottom: 15px;" ><b class="alert alert-dark">Пора написать что-нибудь в ежедневник 0_0</b></div>
+        <div style="text-align: center; margin-top: 15px; margin-bottom: 15px;" ><b class="alert alert-dark">Пора написать что-нибудь в ежедневник 0_0</b></div>
     {% endif %}
+        <div id="information" style="text-align: center; margin-top: 15px; margin-bottom: 15px;"></div>
 
     <div align="center">
-        <button type="submit" class="btn btn-success" style="margin-top: 5px; margin-bottom: 5px;">Отдохнуть</button>
+        <input type="text" name="time" id="time1" style="width: calc(100vw / 10);" placeholder="Минут">
+        <button type="submit" class="btn btn-success" style="margin-top: 5px; margin-bottom: 5px;" id="rest">Отдохнуть</button>
+        <div id="timer1" style="text-align: center;"> </div>
     </div>
     <div align="center">
-        <button type="submit" class="btn btn-danger" style="margin-top: 5px; margin-bottom: 5px;">Работать</button>
+        <input type="text" name="time" id="time2" style="width: calc(100vw / 10);" placeholder="Минут">
+        <button type="submit" class="btn btn-danger" style="margin-top: 5px; margin-bottom: 5px;" id="work">Работать</button>
+        <div id="timer2" style="text-align: center;"></div>
     </div>
+    <audio id="audio_info"></audio>
+    <div style="text-align: center;">
+        <select id="notices_selector">
+            {% for notice in notices %}
+                <option>{{ notice }}</option>
+            {% endfor %}
+        </select>
+    </div>
+    
+    <script src="/static/js/timer.js"></script>
 {% endblock %}

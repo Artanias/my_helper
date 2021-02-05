@@ -1,4 +1,5 @@
 import datetime
+import os
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from .models import DailyReview
@@ -9,6 +10,7 @@ def index(request):
     latest_dialy_list = DailyReview.objects.order_by('-pub_date')
     context = {'title': 'Главная страница'}
     date = datetime.date.today()
+    context['notices'] = os.listdir(path="supporter/static/notice_sounds/")
     
     # В отдельную функцию вынести на след. итерации
     if len(latest_dialy_list) == 0:
