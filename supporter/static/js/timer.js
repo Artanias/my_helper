@@ -1,6 +1,7 @@
 timerInput1 = document.getElementById("time1");
 buttonRun1 = document.getElementById("rest");
 timerShow1 = document.getElementById("timer1");
+var timer1, timer2;
 
 buttonRun1.addEventListener('click', function() {
     let time = parseInt(timerInput1.value)
@@ -14,15 +15,16 @@ buttonRun1.addEventListener('click', function() {
     } 
 
     let timeMinut = time * 60
+    clearInterval(timer1);
 
-    let timer = setInterval(function () {
+    timer1 = setInterval(function () {
         let seconds = timeMinut%60 // Получаем секунды
         let minutes = timeMinut/60%60 // Получаем минуты
         let hour = timeMinut/60/60%60 // Получаем часы
         // Условие если время закончилось то...
         if (timeMinut <= 0) {
             // Таймер удаляется
-            clearInterval(timer);
+            clearInterval(timer1);
             // Выводит сообщение что время закончилось
             timerShow1.innerHTML = "";
             soundStart();
@@ -54,15 +56,16 @@ buttonRun2.addEventListener('click', function() {
     } 
 
     let timeMinut = time * 60
+    clearInterval(timer2);
 
-    let timer = setInterval(function () {
+    timer2 = setInterval(function () {
         let seconds = timeMinut%60 // Получаем секунды
         let minutes = timeMinut/60%60 // Получаем минуты
         let hour = timeMinut/60/60%60 // Получаем часы
         // Условие если время закончилось то...
         if (timeMinut <= 0) {
             // Таймер удаляется
-            clearInterval(timer);
+            clearInterval(timer2);
             // Выводит сообщение что время закончилось
             timerShow2.innerHTML = "";
             soundStart();
