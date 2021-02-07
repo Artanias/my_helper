@@ -3,7 +3,8 @@ import os
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from .models import DailyReview
-from .forms import DailyReviewForm
+from .forms import DailyReviewForm, ContribCalcForm
+from .static.scripts.others import calc_contrib, save_plot
 
 
 def index(request):
@@ -48,3 +49,35 @@ def diary(request):
         return redirect('diary')
 
     return render(request, 'Helper/diary.html', context)
+
+
+def contrib_calc(request):
+    form = ContribCalcForm()
+    fields = form.fields
+    fields['percentage'].initial = 5.0
+    fields['years'].initial = 5
+    fields['start_val'].initial = 10000
+    fields['add'].initial = 5000
+    context = {
+        'form': form
+    }
+
+    if request.method == 'POST':
+        values = request.POST
+        earn = calc_contrib(percentage=float(values['percentage']),
+                            years=int(values['years']),
+                            start_val=int(values['start_val']),
+                            add=int(values['add']),
+                            capitaliz=int(values['capitaliz']))
+        fields = context['form'].fields
+        fields['percentage'].initial = float(values['percentage'])
+        fields['years'].initial = int(values['years'])
+        fields['start_val'].initial = int(values['start_val'])
+        fields['add'].initial = int(values['add'])
+        fields['capitaliz'].initial = int(values['capitaliz'])
+        context['img'] = './static/scripts/temp.png'
+        save_plot(earn, 'supporter/static/scripts/temp.png')
+        summ = round(earn.iloc[int(values['years']), 0], 2)
+        context['summ'] ='{0:,}'.format(summ).replace(",", " ")
+
+    return render(request, 'Helper/contrib_calc.html', context)

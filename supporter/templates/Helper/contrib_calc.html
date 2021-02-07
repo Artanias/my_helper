@@ -1,0 +1,26 @@
+{% extends 'Helper/base.html' %}
+
+{% block title %} {{title}} {% endblock %}
+
+{% block content %}
+    <div align="center"><b>С использованием Seabor</b></div>
+    <div class="contrib">
+        <div class="column">
+            {% if summ %}
+                <div>Конечная сумма: {{ summ }}</div>
+            {% endif %}
+            <form method="post">
+                {% csrf_token %}
+                {% for el in form %}
+                    <div>{{ el.help_text }}:  {{ el }}</div>
+                {% endfor %}
+                <button type="submit" class="btn btn-success" style="margin-top: 5px; margin-bottom: 5px;">График + выручка</button>
+            </form>
+        </div>
+        <div>
+            {% if img %}
+                <img src="{{ img }}">
+            {% endif %}
+        </div>
+    </div>  
+{% endblock %}

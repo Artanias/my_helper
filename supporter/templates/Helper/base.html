@@ -8,13 +8,21 @@
     <link rel="stylesheet" type="text/css" href="{% static 'css/styles.css' %}">
 </head>
 <body>
-    <div class="wrapper" style="min-height: calc(100vh - 93px);">
+    <div class="wrapper" style="min-height: calc(100vh - 73px);">
         <div class="container">
               <div class="nav-scroller py-1 mb-2">
                 <nav class="nav d-flex justify-content-between">
                     <a class="p-2 text-muted" href="{% url 'home' %}">Ботать</a>
                       <a class="p-2 text-muted" href="{% url 'diary' %}">Ежедневник</a>
                       <a class="p-2 text-muted" href="#">Задачи и идеи</a>
+                      <a class="p-2 text-muted" href="#">Полезно</a>
+                      <select  name="hero[]" onchange="window.location.href=this.options[this.selectedIndex].value">
+                          <option selected disabled>Прочее</option>
+                          <option value="/contrib_calc">Калькулятор вкладов</option>
+                          <option value="Крокодил Гена">Калькулятор миллионера</option>
+                          <option value="Шапокляк">Шапокляк</option>
+                          <option value="Крыса Лариса">Крыса Лариса</option>
+                       </select>
                       <a class="p-2 text-muted" href="#">About</a>
                    </nav>
               </div>
@@ -23,7 +31,7 @@
     </div> 
     
 
-        <footer style="margin-top: 20px; padding: 1rem 0; color: #333;
+        <footer style="padding: 1rem 0; color: #333;
                        text-align: center; background-color: #eee;
                        border-top: .05rem solid #e5e5e5;">
             <p align="center">By <a href="{% url 'home' %}">@Artanias</a> with django.</p>
