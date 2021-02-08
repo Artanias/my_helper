@@ -1,5 +1,6 @@
 import datetime
 import os
+import subprocess
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from .models import DailyReview
@@ -9,7 +10,7 @@ from .static.scripts.others import calc_contrib, save_plot
 
 def index(request):
     latest_dialy_list = DailyReview.objects.order_by('-pub_date')
-    context = {'title': 'Главная страница'}
+    context = {'title': 'Бот'}
     date = datetime.date.today()
     context['notices'] = os.listdir(path="supporter/static/notice_sounds/")
     
@@ -21,6 +22,22 @@ def index(request):
     else:
         context['publicated_today'] = False
 
+    if request.method == 'POST':
+        timer_info = request.POST
+        if 'time_rest' in timer_info.keys():
+            context['timer_rest'] = True
+            context['timer'] = int(timer_info['time_rest'])
+            subprocess.Popen('supporter\\static\\exe\\timer.exe ' +
+                             '\"Хорошо отдохнул, время поработать!\" '
+                             + "rest " +  timer_info['time_rest'])
+        elif 'time_work' in timer_info.keys():
+            context['timer_work'] = True
+            context['timer'] = int(timer_info['time_work'])
+            subprocess.Popen('supporter\\static\\exe\\timer.exe ' +
+                             '\"Хорошо поработал, время отдохнуть!\" '
+                             + "work " +  timer_info['time_work'])
+        return render(request, 'Helper/index.html', context)
+
     return render(request, 'Helper/index.html', context)
 
 def diary(request):
@@ -31,7 +48,8 @@ def diary(request):
     context = {
         'diary': latest_dialy_list,
         'form': form,
-        'date': date
+        'date': date,
+        'title': 'Ежедневник'
     }
 
     if len(latest_dialy_list) == 0:
@@ -59,7 +77,8 @@ def contrib_calc(request):
     fields['start_val'].initial = 10000
     fields['add'].initial = 5000
     context = {
-        'form': form
+        'form': form,
+        'title': 'Калькулятор вкладов'
     }
 
     if request.method == 'POST':

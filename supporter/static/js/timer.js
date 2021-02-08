@@ -3,7 +3,7 @@ buttonRun1 = document.getElementById("rest");
 timerShow1 = document.getElementById("timer1");
 var timer1, timer2;
 
-buttonRun1.addEventListener('click', function() {
+function restTimer() {
     let time = parseInt(timerInput1.value)
     if (timerInput1.value == ""){
         alert('Ничего не введено');
@@ -28,23 +28,23 @@ buttonRun1.addEventListener('click', function() {
             // Выводит сообщение что время закончилось
             timerShow1.innerHTML = "";
             soundStart();
-            let info = document.getElementById("information")
-            info.innerHTML = "Время вышло, хорошо отдохнул!"
+            document.title = 'Бот'
         } else { // Иначе
             // Создаём строку с выводом времени
             let strTimer = `${Math.trunc(hour)}:${Math.trunc(minutes)}:${seconds}`;
             // Выводим строку в блок для показа таймера
             timerShow1.innerHTML = strTimer;
+            document.title = strTimer
         }
         --timeMinut; // Уменьшаем таймер
     }, 1000)
-})
+}
 
 timerInput2 = document.getElementById("time2");
 buttonRun2 = document.getElementById("work");
 timerShow2 = document.getElementById("timer2");
 
-buttonRun2.addEventListener('click', function() {
+function workTimer() {
     let time = parseInt(timerInput2.value)
     if (timerInput2.value == ""){
         alert('Ничего не введено');
@@ -69,17 +69,17 @@ buttonRun2.addEventListener('click', function() {
             // Выводит сообщение что время закончилось
             timerShow2.innerHTML = "";
             soundStart();
-            let info = document.getElementById("information")
-            info.innerHTML = "Время вышло, хорошо поработал!"
+            document.title = 'Бот'
         } else { // Иначе
             // Создаём строку с выводом времени
             let strTimer = `${Math.trunc(hour)}:${Math.trunc(minutes)}:${seconds}`;
             // Выводим строку в блок для показа таймера
             timerShow2.innerHTML = strTimer;
+            document.title = strTimer
         }
         --timeMinut; // Уменьшаем таймер
     }, 1000)
-})
+}
 
 function soundStart() {
     let selector = document.getElementById('notices_selector');
