@@ -12,7 +12,8 @@ def index(request):
     latest_dialy_list = DailyReview.objects.order_by('-pub_date')
     context = {'title': 'Бот'}
     date = datetime.date.today()
-    context['notices'] = os.listdir(path="supporter/static/notice_sounds/")
+    path = "supporter/static/rest_musics/Grieg-Schubert-Berlioz-Brahms-Mozart/"
+    context['notices'] = os.listdir(path)
     
     # В отдельную функцию вынести на след. итерации
     if len(latest_dialy_list) == 0:
@@ -27,15 +28,18 @@ def index(request):
         if 'time_rest' in timer_info.keys():
             context['timer_rest'] = True
             context['timer'] = int(timer_info['time_rest'])
+            song = "E.Grieg Peer Gynt Suite No.1 Op. 46 - Death of Ase.wma"
             subprocess.Popen('supporter\\static\\exe\\timer.exe ' +
                              '\"Хорошо отдохнул, время поработать!\" '
-                             + "rest " +  timer_info['time_rest'])
+                             + "rest " +  timer_info['time_rest'] +
+                             (' \"{}{}\"'.format(path, song)))
         elif 'time_work' in timer_info.keys():
             context['timer_work'] = True
             context['timer'] = int(timer_info['time_work'])
             subprocess.Popen('supporter\\static\\exe\\timer.exe ' +
                              '\"Хорошо поработал, время отдохнуть!\" '
-                             + "work " +  timer_info['time_work'])
+                             + "work " +  timer_info['time_work'] +
+                             (' \"{}{}\"'.format(path, song)))
         return render(request, 'Helper/index.html', context)
 
     return render(request, 'Helper/index.html', context)
