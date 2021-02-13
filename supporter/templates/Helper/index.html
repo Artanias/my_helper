@@ -8,38 +8,65 @@
     {% endif %}
 
     <div align="center">
-        <form method="post">
+        <form method="post" id="mus_data">
             {% csrf_token %}
             {% if timer_rest %}
                 <input type="number" min="1" max="999" value="{{ timer }}" name="time_rest" id="time1" placeholder="Минут" size="7">
             {% else %}
                 <input type="number" min="1" max="999" value="5" name="time_rest" id="time1" placeholder="Минут" size="7">
             {% endif %}
-            <button type="submit" class="btn btn-success" style="margin-top: 5px; margin-bottom: 5px;" id="rest">Отдохнуть</button>
+            <button name="rest_but" type="submit" class="btn btn-success" style="margin-top: 5px; margin-bottom: 5px;" id="rest">Отдохнуть</button>
             <div id="timer1" style="text-align: center;"> </div>
-        </form>
-    </div>
-    <div align="center">
-        <form method="post">
-            {% csrf_token %}
+
             {% if timer_work %}
                 <input type="number" min="1" max="999" value="{{ timer }}" name="time_work" id="time2" size="7" placeholder="Минут">
             {% else %}
                 <input type="number" min="1" max="999" value="25" name="time_work" id="time2" size="7" placeholder="Минут">
             {% endif %}
-            <button type="submit" class="btn btn-danger" style="margin-top: 5px; margin-bottom: 5px;" id="work">Работать</button>
+            <button name="work_but" type="submit" class="btn btn-danger" style="margin-top: 5px; margin-bottom: 5px;" id="work">Работать</button>
             <div id="timer2" style="text-align: center;"></div>
         </form>
     </div>
-    <audio id="audio_info"></audio>
-    <div style="text-align: center;">
-        <select id="notices_selector">
-            {% for notice in notices %}
-                <option>{{ notice }}</option>
+
+    <div align="center" style="margin-top:10px;"><b>Уведомление</b></div>
+    <div style="text-align: center;" onchange="listMusic();">
+        <div>Папка</div>
+        <select id="select_folder" form="mus_data" name="select_folder">
+            {% for folder in folders %}
+                <option value="{{ folder }}">{{ folder }}</option>
             {% endfor %}
         </select>
     </div>
+    <div style="text-align: center; margin: 7px;">
+        <div>Композиция</div>
+        <select id="select_music" form="mus_data" name="select_music">
+
+        </select>
+    </div>
+    <div align="center">
+        <button class="btn btn-dark" align="center">Случайно</button>
+    </div>
     
+    <script type="text/javascript"> 
+        var music_field = document.getElementById("select_music");
+        var folder_field = document.getElementById("select_folder");
+        var data = {{ musics|safe }};
+        listMusic();
+        
+        function listMusic(){
+            let selected_folder = folder_field.options[folder_field.selectedIndex].value;
+            let html = "";
+            let musics = data[selected_folder];
+            for (let i = 0; i < musics.length; i++){
+                html += "<option value=\""
+                html += musics[i]; 
+                html += "\">";
+                html += musics[i];
+                html += "</option>";
+            }
+            music_field.innerHTML = html;
+        }
+    </script> 
     <script src="/static/js/timer.js"></script>
     {%if timer_rest %}
     <script type="text/javascript">

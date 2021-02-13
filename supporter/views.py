@@ -1,6 +1,7 @@
 import datetime
 import os
 import subprocess
+import json
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from .models import DailyReview
@@ -12,7 +13,13 @@ def index(request):
     latest_dialy_list = DailyReview.objects.order_by('-pub_date')
     context = {'title': 'Бот'}
     date = datetime.date.today()
-    path = "supporter/static/rest_musics/Grieg-Schubert-Berlioz-Brahms-Mozart/"
+    path = "supporter/static/rest_musics/"
+    folders = os.listdir(path)
+    musics = {}
+    for folder in folders:
+        musics[folder] = (os.listdir(path + folder))
+    context['musics'] = musics
+    context['folders'] = folders
     context['notices'] = os.listdir(path)
     
     # В отдельную функцию вынести на след. итерации
@@ -25,21 +32,22 @@ def index(request):
 
     if request.method == 'POST':
         timer_info = request.POST
-        if 'time_rest' in timer_info.keys():
+        path += timer_info['select_folder']
+        path += "/"
+        if 'rest_but' in timer_info.keys():
             context['timer_rest'] = True
             context['timer'] = int(timer_info['time_rest'])
-            song = "E.Grieg Peer Gynt Suite No.1 Op. 46 - Death of Ase.wma"
             subprocess.Popen('supporter\\static\\exe\\timer.exe ' +
                              '\"Хорошо отдохнул, время поработать!\" '
                              + "rest " +  timer_info['time_rest'] +
-                             (' \"{}{}\"'.format(path, song)))
-        elif 'time_work' in timer_info.keys():
+                             (' \"{}{}\"'.format(path, timer_info['select_music'])))
+        elif 'work_but' in timer_info.keys():
             context['timer_work'] = True
             context['timer'] = int(timer_info['time_work'])
             subprocess.Popen('supporter\\static\\exe\\timer.exe ' +
                              '\"Хорошо поработал, время отдохнуть!\" '
                              + "work " +  timer_info['time_work'] +
-                             (' \"{}{}\"'.format(path, song)))
+                             (' \"{}{}\"'.format(path, timer_info['select_music'])))
         return render(request, 'Helper/index.html', context)
 
     return render(request, 'Helper/index.html', context)
