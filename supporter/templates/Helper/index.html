@@ -44,18 +44,37 @@
         </select>
     </div>
     <div align="center">
-        <button class="btn btn-dark" align="center">Случайно</button>
+        <button class="btn btn-dark" align="center" style="margin-bottom:10px;" onclick="randomSelect()">Случайно</button>
     </div>
     
     <script type="text/javascript"> 
-        var music_field = document.getElementById("select_music");
-        var folder_field = document.getElementById("select_folder");
-        var data = {{ musics|safe }};
-        listMusic();
+        {% if select_folder %}
+            var select_folder = "{{ select_folder|safe }}";
+            var select_music = "{{ select_music|safe }}";
+            var options = document.getElementsByTagName("option");
+            for (let i = 0; i < options.length; i++){
+                if (options[i].innerHTML == select_folder){
+                    options[i].selected = true;
+                    break;
+                }
+            }
+            listMusic();
+            for (let i = 0; i < options.length; i++){
+                if (options[i].innerHTML == select_music){
+                    options[i].selected = true;
+                    break;
+                }
+            }
+        {% else %}
+            listMusic();
+        {% endif %}
         
         function listMusic(){
+            let music_field = document.getElementById("select_music");
+            let folder_field = document.getElementById("select_folder");
             let selected_folder = folder_field.options[folder_field.selectedIndex].value;
             let html = "";
+            let data = {{ musics|safe }};
             let musics = data[selected_folder];
             for (let i = 0; i < musics.length; i++){
                 html += "<option value=\""
@@ -65,6 +84,29 @@
                 html += "</option>";
             }
             music_field.innerHTML = html;
+        }
+
+        function randomSelect(){
+            let data = {{ musics|safe }}; 
+            let num = Math.floor(Math.random() * Object.keys(data).length);
+            let select_folder = Object.keys(data)[num];
+            let options = document.getElementsByTagName("option");
+            for (let i = 0; i < options.length; i++){
+                if (options[i].innerHTML == select_folder){
+                    options[i].selected = true;
+                    break;
+                }
+            }
+            listMusic();
+
+            num = Math.floor(Math.random() * data[select_folder].length);
+            select_music = data[select_folder][num];
+            for (let i = 0; i < options.length; i++){
+                if (options[i].innerHTML == select_music){
+                    options[i].selected = true;
+                    break;
+                }
+            }
         }
     </script> 
     <script src="/static/js/timer.js"></script>

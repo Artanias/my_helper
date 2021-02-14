@@ -27,14 +27,14 @@ function restTimer() {
             clearInterval(timer1);
             // Выводит сообщение что время закончилось
             timerShow1.innerHTML = "";
-            soundStart();
-            document.title = 'Бот'
+            //soundStart();
+            document.title = 'Бот';
         } else { // Иначе
             // Создаём строку с выводом времени
             let strTimer = `${Math.trunc(hour)}:${Math.trunc(minutes)}:${seconds}`;
             // Выводим строку в блок для показа таймера
             timerShow1.innerHTML = strTimer;
-            document.title = strTimer
+            document.title = strTimer;
         }
         --timeMinut; // Уменьшаем таймер
     }, 1000)
@@ -68,14 +68,14 @@ function workTimer() {
             clearInterval(timer2);
             // Выводит сообщение что время закончилось
             timerShow2.innerHTML = "";
-            soundStart();
-            document.title = 'Бот'
+            //soundStart();
+            document.title = 'Бот';
         } else { // Иначе
             // Создаём строку с выводом времени
             let strTimer = `${Math.trunc(hour)}:${Math.trunc(minutes)}:${seconds}`;
             // Выводим строку в блок для показа таймера
             timerShow2.innerHTML = strTimer;
-            document.title = strTimer
+            document.title = strTimer;
         }
         --timeMinut; // Уменьшаем таймер
     }, 1000)

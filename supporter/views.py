@@ -32,6 +32,8 @@ def index(request):
 
     if request.method == 'POST':
         timer_info = request.POST
+        context['select_folder'] = timer_info['select_folder']
+        context['select_music'] = timer_info['select_music']
         path += timer_info['select_folder']
         path += "/"
         if 'rest_but' in timer_info.keys():
