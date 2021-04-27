@@ -1,0 +1,15 @@
+{% extends 'Helper/base.html' %}
+
+{% block title %} {{ title }} {% endblock %}
+
+{% block content %}
+    <div align="center" style="padding-left: calc(20vw); padding-right: calc(20vw)">
+        <h3>Добавить новую идею/задачу</h1>
+        <form method="post">
+            {% csrf_token %}
+            {{ form.task_info }}
+            <button type="submit" class="btn btn-success" style="margin: 5px;">Добавить</button>
+        </form>
+    </div>
+    
+{% endblock %}

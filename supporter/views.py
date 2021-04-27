@@ -5,7 +5,7 @@ import json
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from .models import DailyReview
-from .forms import DailyReviewForm, ContribCalcForm
+from .forms import DailyReviewForm, ContribCalcForm, TaskForm
 from .static.scripts.others import calc_contrib, save_plot
 
 
@@ -13,7 +13,7 @@ def index(request):
     latest_dialy_list = DailyReview.objects.order_by('-pub_date')
     context = {'title': 'Бот'}
     date = datetime.date.today()
-    path = "supporter/static/rest_musics/"
+    path = "supporter\\static\\rest_musics\\"
     folders = os.listdir(path)
     musics = {}
     for folder in folders:
@@ -35,20 +35,18 @@ def index(request):
         context['select_folder'] = timer_info['select_folder']
         context['select_music'] = timer_info['select_music']
         path += timer_info['select_folder']
-        path += "/"
+        path += "\\"
         if 'rest_but' in timer_info.keys():
             context['timer_rest'] = True
             context['timer'] = int(timer_info['time_rest'])
-            subprocess.Popen('supporter\\static\\exe\\timer.exe ' +
-                             '\"Хорошо отдохнул, время поработать!\" '
-                             + "rest " +  timer_info['time_rest'] +
+            subprocess.Popen('supporter\\static\\exe\\timer.exe '
+                             +  timer_info['time_rest'] +
                              (' \"{}{}\"'.format(path, timer_info['select_music'])))
         elif 'work_but' in timer_info.keys():
             context['timer_work'] = True
             context['timer'] = int(timer_info['time_work'])
-            subprocess.Popen('supporter\\static\\exe\\timer.exe ' +
-                             '\"Хорошо поработал, время отдохнуть!\" '
-                             + "work " +  timer_info['time_work'] +
+            subprocess.Popen('supporter\\static\\exe\\timer.exe '
+                             +  timer_info['time_work'] +
                              (' \"{}{}\"'.format(path, timer_info['select_music'])))
         return render(request, 'Helper/index.html', context)
 
@@ -114,3 +112,14 @@ def contrib_calc(request):
         context['summ'] ='{0:,}'.format(summ).replace(",", " ")
 
     return render(request, 'Helper/contrib_calc.html', context)
+
+
+def tasks(request):
+    context = {
+        'title': 'Задачи',
+        'form': TaskForm
+    }
+    if (request.method == 'POST'):
+        pass
+
+    return render(request, 'Helper/tasks.html', context)

@@ -1,6 +1,19 @@
-from .models import DailyReview
+from .models import DailyReview, Task
 from django.forms import ModelForm, Textarea, Form
 from django.forms import ChoiceField, IntegerField, FloatField
+
+
+class TaskForm(ModelForm):
+  class Meta:
+    model = Task
+    fields = ["task_info"]
+    widgets = {"task_info": Textarea(attrs={
+                                        'class': 'form-control',
+                                        'placeholder': 'Описание задачи, цели',
+                                        'cols': 10,
+                                        'rows': 2
+                                     })
+              }
 
 
 class DailyReviewForm(ModelForm):
@@ -13,6 +26,7 @@ class DailyReviewForm(ModelForm):
                                                 'cols': 150
                                             })
                   }
+
 
 class ContribCalcForm(Form):
     percentage = FloatField(max_value=100, min_value=0,
