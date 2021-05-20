@@ -32,5 +32,6 @@ int main(int argc, char *argv[]) {
 			//MessageBox(NULL, argv[1], "Warning", MB_OK | MB_ICONWARNING);
 		}*/
 	}
+	system("start chrome https://www.youtube.com/watch?v=qx4FLF5QcAw /incognito");
 	return 0;
 };
