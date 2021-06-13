@@ -4,6 +4,7 @@ import subprocess
 import json
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
+from django.core import serializers
 from .models import DailyReview
 from .forms import DailyReviewForm, ContribCalcForm, TaskForm
 from .static.scripts.others import calc_contrib, save_plot
@@ -54,11 +55,12 @@ def index(request):
 
 def diary(request):
     latest_dialy_list = DailyReview.objects.order_by('-pub_date')
+    serialized = serializers.serialize("json", latest_dialy_list)
     form = DailyReviewForm()
     date = datetime.date.today()
 
     context = {
-        'diary': latest_dialy_list,
+        'ser_diary': serialized,
         'form': form,
         'date': date,
         'title': 'Ежедневник'

@@ -15,8 +15,34 @@
     </div>
     {% endif %}
 
-    {% for day in diary %}
-        <b>{{ day.pub_date }}</b>
-        <p style="text-align: justify"> {{ day.review }} </p>
-    {% endfor %}
+    <div align="center">
+        <button id="show_diary" type="submit" class="btn btn-secondary" style="margin-top: 5px; margin-bottom: 20px;">Показать записи</button>
+    </div>
+    <div id="reviews"></div>
+
+    <script type="text/javascript">
+        show_diary.onclick = function(){
+            var div_reviews = document.getElementById("reviews");
+            var show_btn = document.getElementById("show_diary");
+            var reviews = {{ ser_diary | safe }};
+            if(show_btn.innerHTML == "Показать записи"){
+                var html = "";
+                for(let i = 0; i < reviews.length; i++)
+                {
+                    html += '<b margin-bottom: 15px>';
+                    html += reviews[i]["fields"]['pub_date'];
+                    html += '</b>';
+                    html += '<p style="text-align: justify">'
+                    html += reviews[i]["fields"]['review'];
+                    html += '</p>';
+                }
+                div_reviews.innerHTML = html;
+                show_btn.innerHTML = "Скрыть записи";
+            }
+            else if(show_btn.innerHTML == "Скрыть записи"){
+                div_reviews.innerHTML = "";
+                show_btn.innerHTML = "Показать записи";
+            }
+        };
+    </script>
 {% endblock %}
