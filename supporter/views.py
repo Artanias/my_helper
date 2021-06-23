@@ -6,7 +6,7 @@ from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.core import serializers
 from .models import DailyReview
-from .forms import DailyReviewForm, ContribCalcForm, TaskForm
+from .forms import DailyReviewForm, ContribCalcForm
 from .static.scripts.others import calc_contrib, save_plot
 
 
@@ -114,14 +114,3 @@ def contrib_calc(request):
         context['summ'] ='{0:,}'.format(summ).replace(",", " ")
 
     return render(request, 'Helper/contrib_calc.html', context)
-
-
-def tasks(request):
-    context = {
-        'title': 'Задачи',
-        'form': TaskForm
-    }
-    if (request.method == 'POST'):
-        pass
-
-    return render(request, 'Helper/tasks.html', context)

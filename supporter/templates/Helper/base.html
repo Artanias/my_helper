@@ -14,16 +14,10 @@
                 <nav class="nav d-flex justify-content-between">
                     <a class="p-2 text-muted" href="{% url 'home' %}">Ботать</a>
                       <a class="p-2 text-muted" href="{% url 'diary' %}">Ежедневник</a>
-                      <a class="p-2 text-muted" href="{% url 'tasks' %}">Do It</a>
-                      <a class="p-2 text-muted" href="#">Полезно</a>
                       <select  name="hero[]" onchange="window.location.href=this.options[this.selectedIndex].value">
                           <option selected disabled>Прочее</option>
                           <option value="{% url 'contrib_calc' %}">Калькулятор вкладов</option>
-                          <option value="Крокодил Гена">Калькулятор миллионера</option>
-                          <option value="Шапокляк">Шапокляк</option>
-                          <option value="Крыса Лариса">Крыса Лариса</option>
                        </select>
-                      <a class="p-2 text-muted" href="#">About</a>
                    </nav>
               </div>
               {% block content %}{% endblock %}
