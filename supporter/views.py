@@ -2,12 +2,14 @@ import datetime
 import os
 import subprocess
 import json
+
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.core import serializers
 from .models import DailyReview
 from .forms import DailyReviewForm, ContribCalcForm
 from .static.scripts.others import calc_contrib, save_plot
+from decouple import config
 
 
 def index(request):
@@ -32,6 +34,7 @@ def index(request):
         context['publicated_today'] = False
 
     if request.method == 'POST':
+        warm_up_link = config('WARMUP', default='')
         timer_info = request.POST
         context['select_folder'] = timer_info['select_folder']
         context['select_music'] = timer_info['select_music']
@@ -48,10 +51,12 @@ def index(request):
             context['timer'] = int(timer_info['time_work'])
             subprocess.Popen('supporter\\static\\exe\\timer.exe '
                              +  timer_info['time_work'] +
-                             (' \"{}{}\"'.format(path, timer_info['select_music'])))
+                             (' \"{}{}\" '.format(path, timer_info['select_music']))
+                             + warm_up_link)
         return render(request, 'Helper/index.html', context)
 
     return render(request, 'Helper/index.html', context)
+
 
 def diary(request):
     latest_dialy_list = DailyReview.objects.order_by('-pub_date')

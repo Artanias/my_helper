@@ -4,7 +4,6 @@
 #include <string>
 
 int main(int argc, char *argv[]) {
-	//ShowWindow(GetConsoleWindow(), SW_HIDE);
 	if (argc > 2){
 		std::stringstream convert(argv[1]);
 		int minutes;
@@ -25,13 +24,14 @@ int main(int argc, char *argv[]) {
 		else run_music = temp;
 		Sleep(1000 * minutes * 60);
 		system(run_music.c_str());
-		/*if (strcmp(argv[2], "rest") == 0){
-			//MessageBox(NULL, argv[1], "Info", MB_OK | MB_ICONINFORMATION);
-		}
-		else if(strcmp(argv[2], "work") == 0){
-			//MessageBox(NULL, argv[1], "Warning", MB_OK | MB_ICONWARNING);
-		}*/
 	}
-	system("start chrome https://www.youtube.com/watch?v=qx4FLF5QcAw /incognito");
+
+	if(argc > 3){
+		std::string command = "start chrome ";
+		command += argv[3];
+		command += " /incognito";
+		system(command.c_str());
+	}
+
 	return 0;
 };

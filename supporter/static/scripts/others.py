@@ -35,6 +35,7 @@ def calc_contrib(percentage=1, years=10, start_val=10000,
 
 
 def save_plot(df, path="contrib.png"):
+    plt.clf()
     plot = sns.jointplot(x=df.index, y=df['Янв'],
                          kind='reg',
                          xlim=(df.index.start, df.index.stop))
