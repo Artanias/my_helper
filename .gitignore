@@ -2,4 +2,4 @@ db.sqlite3
 __pycache__
 supporter/static/scripts/temp.png
 supporter/static/rest_musics/
-supporter/.env
+.env
