@@ -16,9 +16,14 @@
     {% endif %}
 
     <div align="center">
-        <button id="show_diary" type="submit" class="btn btn-secondary" style="margin-top: 5px; margin-bottom: 20px;">Показать записи</button>
+        <button href="#ya" id="show_diary" type="submit" class="btn btn-secondary" style="margin-top: 5px; margin-bottom: 20px;">Показать записи</button>
+        <a id="down_btn" href="#up_btn" class="btn-secondary" style="text-decoration: none; border-radius: 10px; border: 1px solid #000000; font-size: 27px; display: none">↓</a>
     </div>
     <div id="reviews"></div>
+    
+    <div id="end" align="center">
+        <a id="up_btn" href="#down_btn" class="btn-secondary" style="margin-bottom: 10px; text-decoration: none; border-radius: 10px; border: 1px solid #000000; font-size: 27px; display: none">↑</a>
+    </div>
 
     <script type="text/javascript">
         show_diary.onclick = function(){
@@ -26,6 +31,8 @@
             var show_btn = document.getElementById("show_diary");
             var reviews = {{ ser_diary | safe }};
             if(show_btn.innerHTML == "Показать записи"){
+                document.getElementById("down_btn").style.display = "inline-block";
+                document.getElementById("up_btn").style.display = "inline-block";
                 var html = "";
                 for(let i = 0; i < reviews.length; i++)
                 {
@@ -40,9 +47,24 @@
                 show_btn.innerHTML = "Скрыть записи";
             }
             else if(show_btn.innerHTML == "Скрыть записи"){
+                document.getElementById("down_btn").style.display = "none";
+                document.getElementById("up_btn").style.display = "none";
                 div_reviews.innerHTML = "";
                 show_btn.innerHTML = "Показать записи";
             }
-        };
+        }
+
+        const anchors = document.querySelectorAll('a[href*="#"]')
+
+        for (let anchor of anchors){
+            anchor.addEventListener("click", function(event){
+                event.preventDefault();
+                const blockID = anchor.getAttribute('href')
+                document.querySelector('' + blockID).scrollIntoView({
+                    behavior: "smooth",
+                    block: "start"
+                })
+            })
+        }
     </script>
 {% endblock %}
