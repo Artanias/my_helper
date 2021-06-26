@@ -14,6 +14,14 @@ Windows:
 
 - python 3.6+;
 
-- pip3 install -r ./requirements.txt;
+```
+    pip3 install -r ./requirements.txt;
+```
 
-- Скомпилируйте файл Helper.cpp и запустите полученный исполняемый файл либо запустите Helper.exe.
+- python manage.py migrate - выполнит необходимое создание баз данных со всеми необходимыми таблицами;
+
+- Скомпилируйте файл Helper.cpp и запустите полученный исполняемый файл либо запустите Helper.exe, либо выполните:
+
+```
+    python manage.py runserver
+```

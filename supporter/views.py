@@ -17,7 +17,10 @@ def index(request):
     context = {'title': 'Бот'}
     date = datetime.date.today()
     path = "supporter\\static\\rest_musics\\"
+    if not os.path.exists(path):
+        os.mkdir(path)
     folders = os.listdir(path)
+
     musics = {}
     for folder in folders:
         musics[folder] = (os.listdir(path + folder))
@@ -36,23 +39,29 @@ def index(request):
     if request.method == 'POST':
         warm_up_link = config('WARMUP', default='')
         timer_info = request.POST
-        context['select_folder'] = timer_info['select_folder']
-        context['select_music'] = timer_info['select_music']
-        path += timer_info['select_folder']
-        path += "\\"
+        if 'select_folder' in timer_info.keys():
+            context['select_folder'] = timer_info['select_folder']
+            if 'select_music' in timer_info.keys():
+                context['select_music'] = timer_info['select_music']
+
+                path += timer_info['select_folder']
+                path += "\\"
+                path += timer_info['select_music']
+
         if 'rest_but' in timer_info.keys():
             context['timer_rest'] = True
             context['timer'] = int(timer_info['time_rest'])
             subprocess.Popen('supporter\\static\\exe\\timer.exe '
                              +  timer_info['time_rest'] +
-                             (' \"{}{}\"'.format(path, timer_info['select_music'])))
+                             (' \"{}\"'.format(path)))
         elif 'work_but' in timer_info.keys():
             context['timer_work'] = True
             context['timer'] = int(timer_info['time_work'])
             subprocess.Popen('supporter\\static\\exe\\timer.exe '
                              +  timer_info['time_work'] +
-                             (' \"{}{}\" '.format(path, timer_info['select_music']))
+                             (' \"{}\" '.format(path))
                              + warm_up_link)
+
         return render(request, 'Helper/index.html', context)
 
     return render(request, 'Helper/index.html', context)
