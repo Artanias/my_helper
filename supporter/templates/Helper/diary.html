@@ -6,6 +6,11 @@
     {% if not publicated_today %}
     <div style="text-align: center;">
         <h1>Добавить дневной отчёт</h1>
+        <div align='center' style="margin-bottom: 10px; margin-left: calc(100vw / 6); margin-right: calc(100vw / 6); font-style: italic; text-align: justify;">
+            <p style="margin: 0px;">Что приятного, запоминающегося было сегодя?</p>
+            <p style="margin: 0px;">Что полезного, важного было сделано сегодня?</p>
+            <p style="margin: 0px;">Если бы можно было бы заново прожить день, что бы изменилось в проделанных действиях?</p>
+        </div>
         <form method="post">
             {% csrf_token %}
             {{ form.review }}<br>
@@ -37,7 +42,16 @@
                 for(let i = 0; i < reviews.length; i++)
                 {
                     html += '<b margin-bottom: 15px>';
-                    html += reviews[i]["fields"]['pub_date'];
+                    pub_date = reviews[i]["fields"]['pub_date'].split('-');
+                    html += pub_date[2];
+                    html += ' ';
+                    to_month = {'01': 'January', '02': 'February', '03': 'March', '04': 'April',
+                                '05': 'May', '06': 'June', '07': 'July', '08': 'August',
+                                '09': 'September', '10': 'October', '11': 'November',
+                                '12': 'December'}
+                    html += to_month[pub_date[1]];
+                    html += ' ';
+                    html += pub_date[0];
                     html += '</b>';
                     html += '<p style="text-align: justify">'
                     html += reviews[i]["fields"]['review'];
