@@ -51,16 +51,28 @@ def index(request):
         if 'rest_but' in timer_info.keys():
             context['timer_rest'] = True
             context['timer'] = int(timer_info['time_rest'])
-            subprocess.Popen('supporter\\static\\exe\\timer.exe '
-                             +  timer_info['time_rest'] +
-                             (' \"{}\"'.format(path)))
+
+            if 'notification' in timer_info.keys():
+                subprocess.Popen('supporter\\static\\exe\\timer.exe '
+                                 + timer_info['time_rest'] +
+                                 (' \"{}\"'.format(path)))
+            else:
+                subprocess.Popen('supporter\\static\\exe\\timer.exe '
+                                 + timer_info['time_rest']
+                                 + ' -')
         elif 'work_but' in timer_info.keys():
             context['timer_work'] = True
             context['timer'] = int(timer_info['time_work'])
-            subprocess.Popen('supporter\\static\\exe\\timer.exe '
-                             +  timer_info['time_work'] +
-                             (' \"{}\" '.format(path))
-                             + warm_up_link)
+            if 'notification' in timer_info.keys():
+                subprocess.Popen('supporter\\static\\exe\\timer.exe '
+                                 + timer_info['time_work']
+                                 + (' \"{}\" '.format(path))
+                                 + warm_up_link)
+            else:
+                subprocess.Popen('supporter\\static\\exe\\timer.exe '
+                                 + timer_info['time_work']
+                                 + ' - '
+                                 + warm_up_link)
 
         return render(request, 'Helper/index.html', context)
 
