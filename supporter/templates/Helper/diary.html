@@ -8,6 +8,7 @@
         <h1>Добавить дневной отчёт</h1>
         <div align='center' style="margin-bottom: 10px; margin-left: calc(100vw / 6); margin-right: calc(100vw / 6); font-style: italic; text-align: justify;">
             <p style="margin: 0px;">Что приятного, запоминающегося было сегодя?</p>
+            <p style="margin: 0px;">Кому и за что я благодарен?</p>
             <p style="margin: 0px;">Что полезного, важного было сделано сегодня?</p>
             <p style="margin: 0px;">Если бы можно было бы заново прожить день, что бы изменилось в проделанных действиях?</p>
         </div>
@@ -67,18 +68,6 @@
                 show_btn.innerHTML = "Показать записи";
             }
         }
-
-        const anchors = document.querySelectorAll('a[href*="#"]')
-
-        for (let anchor of anchors){
-            anchor.addEventListener("click", function(event){
-                event.preventDefault();
-                const blockID = anchor.getAttribute('href')
-                document.querySelector('' + blockID).scrollIntoView({
-                    behavior: "smooth",
-                    block: "start"
-                })
-            })
-        }
     </script>
+    <script src="/static/js/diary.js"></script>
 {% endblock %}
