@@ -25,3 +25,18 @@ Windows:
 ```
     python manage.py runserver
 ```
+
+# Переменные окружения
+
+Должны располагаться в папке Helper в файле .env:
+
+1) SECRET_KEY - ключ для django приложения;
+
+2) WARMUP - ссылка на видео для разминки спины.
+
+**Пример:**
+
+```
+    SECRET_KEY='a;kdjfjs;af'
+    WARMUP='https://www.youtube.com/...'
+```
