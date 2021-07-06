@@ -32,10 +32,13 @@ int main(int argc, char *argv[]) {
 	}
 
 	if(argc > 3){
-		std::string command = "start chrome ";
-		command += argv[3];
-		command += " /incognito";
-		system(command.c_str());
+		if(std::string(argv[3]).find("https") == 0){
+			std::string command = "start chrome ";
+			command += argv[3];
+			command += " /incognito";
+			system(command.c_str());
+		}
+		else system(argv[3]);
 	}
 
 	return 0;

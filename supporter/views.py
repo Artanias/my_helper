@@ -16,17 +16,16 @@ def index(request):
     latest_dialy_list = DailyReview.objects.order_by('-pub_date')
     context = {'title': 'Бот'}
     date = datetime.date.today()
-    path = "supporter\\static\\rest_musics\\"
-    if not os.path.exists(path):
-        os.mkdir(path)
-    folders = os.listdir(path)
+    path_to_music = "supporter\\static\\rest_musics\\"
+    path_to_video = "supporter\\static\\video\\"
+    folders = os.listdir(path_to_music)
 
     musics = {}
     for folder in folders:
-        musics[folder] = (os.listdir(path + folder))
+        musics[folder] = (os.listdir(path_to_music + folder))
     context['musics'] = musics
     context['folders'] = folders
-    context['notices'] = os.listdir(path)
+    context['notices'] = os.listdir(path_to_music)
     
     # В отдельную функцию вынести на след. итерации
     if len(latest_dialy_list) == 0:
@@ -37,16 +36,20 @@ def index(request):
         context['publicated_today'] = False
 
     if request.method == 'POST':
-        warm_up_link = config('WARMUP', default='')
+        videos = os.listdir(path_to_video)
+        if len(videos) != 0:
+            warm_up_video = path_to_video + videos[0]
+        else:
+            warm_up_video = config('WARMUP', default='')
         timer_info = request.POST
         if 'select_folder' in timer_info.keys():
             context['select_folder'] = timer_info['select_folder']
             if 'select_music' in timer_info.keys():
                 context['select_music'] = timer_info['select_music']
 
-                path += timer_info['select_folder']
-                path += "\\"
-                path += timer_info['select_music']
+                path_to_music += timer_info['select_folder']
+                path_to_music += "\\"
+                path_to_music += timer_info['select_music']
 
         if 'rest_but' in timer_info.keys():
             context['timer_rest'] = True
@@ -55,7 +58,7 @@ def index(request):
             if 'notification' in timer_info.keys():
                 subprocess.Popen('supporter\\static\\exe\\timer.exe '
                                  + timer_info['time_rest'] +
-                                 (' \"{}\"'.format(path)))
+                                 (' \"{}\"'.format(path_to_music)))
             else:
                 subprocess.Popen('supporter\\static\\exe\\timer.exe '
                                  + timer_info['time_rest']
@@ -66,13 +69,13 @@ def index(request):
             if 'notification' in timer_info.keys():
                 subprocess.Popen('supporter\\static\\exe\\timer.exe '
                                  + timer_info['time_work']
-                                 + (' \"{}\" '.format(path))
-                                 + warm_up_link)
+                                 + (' \"{}\" '.format(path_to_music))
+                                 + warm_up_video)
             else:
                 subprocess.Popen('supporter\\static\\exe\\timer.exe '
                                  + timer_info['time_work']
                                  + ' - '
-                                 + warm_up_link)
+                                 + warm_up_video)
 
         return render(request, 'Helper/index.html', context)
 
