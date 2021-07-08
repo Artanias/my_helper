@@ -5,10 +5,10 @@
     <meta charset="UTF-8">
     <title>{% block title %}{% endblock %}</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <link rel="stylesheet" type="text/css" href="{% static 'css/styles.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
 </head>
 <body>
-    <div class="wrapper" style="min-height: calc(100vh - 73px);">
+    <div class="wrapper">
         <div class="container">
               <div class="nav-scroller py-1 mb-2">
                 <nav class="nav d-flex justify-content-between">
@@ -25,9 +25,7 @@
     </div> 
     
 
-        <footer style="padding: 1rem 0; color: #333;
-                       text-align: center; background-color: #eee;
-                       border-top: .05rem solid #e5e5e5;">
+        <footer>
             <p align="center">By <a href="{% url 'home' %}">@Artanias</a> with django.</p>
         </footer>   
 </body>

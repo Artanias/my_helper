@@ -1,9 +1,0 @@
-.contrib {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    text-align: center;
-}
-
-div.column {
-    margin: auto;
-}

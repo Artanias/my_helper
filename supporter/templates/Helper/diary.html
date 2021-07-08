@@ -4,31 +4,31 @@
 
 {% block content %}
     {% if not publicated_today %}
-    <div style="text-align: center;">
+    <div>
         <h1>Добавить дневной отчёт</h1>
-        <div align='center' style="margin-bottom: 10px; margin-left: calc(100vw / 6); margin-right: calc(100vw / 6); font-style: italic; text-align: justify;">
-            <p style="margin: 0px;">Что приятного, запоминающегося было сегодя?</p>
-            <p style="margin: 0px;">Кому и за что я благодарен?</p>
-            <p style="margin: 0px;">Что полезного, важного было сделано сегодня?</p>
-            <p style="margin: 0px;">Если бы можно было бы заново прожить день, что бы изменилось в проделанных действиях?</p>
+        <div align='center' class="questions">
+            <p class="question">Что приятного, запоминающегося было сегодя?</p>
+            <p class="question">Кому и за что я благодарен?</p>
+            <p class="question">Что полезного, важного было сделано сегодня?</p>
+            <p class="question">Если бы можно было бы заново прожить день, что бы изменилось в проделанных действиях?</p>
         </div>
         <form method="post">
             {% csrf_token %}
             {{ form.review }}<br>
             {{ date }}<br>
-            <button type="submit" class="btn btn-success" style="margin-top: 5px; margin-bottom: 5px;">Добавить</button>
+            <button type="submit" class="btn btn-success btn-margin">Добавить</button>
         </form>
     </div>
     {% endif %}
 
     <div align="center">
-        <button href="#ya" id="show_diary" type="submit" class="btn btn-secondary" style="margin-top: 5px; margin-bottom: 20px;">Показать записи</button>
-        <a id="down_btn" href="#up_btn" class="btn-secondary" style="text-decoration: none; border-radius: 10px; border: 1px solid #000000; font-size: 27px; display: none">↓</a>
+        <button href="#ya" id="show_diary" type="submit" class="btn btn-secondary btn-margin-more">Показать записи</button>
+        <a id="down_btn" href="#up_btn" class="btn-secondary btn-down">↓</a>
     </div>
     <div id="reviews"></div>
     
     <div id="end" align="center">
-        <a id="up_btn" href="#down_btn" class="btn-secondary" style="margin-bottom: 10px; text-decoration: none; border-radius: 10px; border: 1px solid #000000; font-size: 27px; display: none">↑</a>
+        <a id="up_btn" href="#down_btn" class="btn-secondary btn-up">↑</a>
     </div>
 
     <script type="text/javascript">
@@ -42,6 +42,7 @@
                 var html = "";
                 for(let i = 0; i < reviews.length; i++)
                 {
+                    html += '<p class="review">'
                     html += '<b margin-bottom: 15px>';
                     pub_date = reviews[i]["fields"]['pub_date'].split('-');
                     html += pub_date[2];
@@ -53,8 +54,8 @@
                     html += to_month[pub_date[1]];
                     html += ' ';
                     html += pub_date[0];
+                    html += ' '
                     html += '</b>';
-                    html += '<p style="text-align: justify">'
                     html += reviews[i]["fields"]['review'];
                     html += '</p>';
                 }

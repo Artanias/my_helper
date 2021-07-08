@@ -4,7 +4,7 @@
 
 {% block content %}
     {% if not publicated_today %}
-        <div style="text-align: center; margin-top: 15px; margin-bottom: 15px;" ><b class="alert alert-dark">Пора написать что-нибудь в ежедневник 0_0</b></div>
+        <div class="diary-info"><b class="alert alert-dark">Пора написать что-нибудь в ежедневник 0_0</b></div>
     {% endif %}
 
     <div align="center">
@@ -15,25 +15,25 @@
             {% else %}
                 <input type="number" min="1" max="999" value="5" name="time_rest" id="time1" placeholder="Минут" size="7">
             {% endif %}
-            <button name="rest_but" type="submit" class="btn btn-success" style="margin-top: 5px; margin-bottom: 5px;" id="rest">Отдохнуть</button>
-            <div id="timer1" style="text-align: center;"> </div>
+            <button name="rest_but" type="submit" class="btn btn-success btn-margin" id="rest">Отдохнуть</button>
+            <div id="timer1"> </div>
 
             {% if timer_work %}
                 <input type="number" min="1" max="999" value="{{ timer }}" name="time_work" id="time2" size="7" placeholder="Минут">
             {% else %}
                 <input type="number" min="1" max="999" value="40" name="time_work" id="time2" size="7" placeholder="Минут">
             {% endif %}
-            <button name="work_but" type="submit" class="btn btn-danger" style="margin-top: 5px; margin-bottom: 5px;" id="work">Работать</button>
-            <div id="timer2" style="text-align: center;"></div>
+            <button name="work_but" type="submit" class="btn btn-danger btn-margin" id="work">Работать</button>
+            <div id="timer2"></div>
 
-            <div align="center" style="margin-top:10px;">
+            <div align="center" class="notification">
                 <b>Уведомление</b>
                 <input type="checkbox" name="notification" checked="checked">
             </div>
         </form>
     </div>
 
-    <div style="text-align: center;" onchange="listMusic();" id="folder">
+    <div class="select-margin" onchange="listMusic();" id="folder">
         <div>Папка</div>
         <select id="select_folder" form="mus_data" name="select_folder">
             {% for folder in folders %}
@@ -41,14 +41,14 @@
             {% endfor %}
         </select>
     </div>
-    <div style="text-align: center; margin: 7px;" id="music">
+    <div class="select-margin" id="music">
         <div>Композиция</div>
         <select id="select_music" form="mus_data" name="select_music">
 
         </select>
     </div>
     <div align="center" id="random_btn">
-        <button class="btn btn-dark" align="center" style="margin-bottom:10px;" onclick="randomSelect()">Случайно</button>
+        <button class="btn btn-dark btn-margin-more" align="center" onclick="randomSelect()">Случайно</button>
     </div>
 
     <script type="text/javascript"> 
